@@ -1,8 +1,11 @@
 package com.zandero.kotlin
 
 import com.zandero.kotlin.rest.CardRest
+import com.zandero.kotlin.rest.ExecutionResultWriter
+import com.zandero.kotlin.rest.QueryRest
 import com.zandero.kotlin.service.CardsService
 import com.zandero.rest.RestBuilder
+import graphql.ExecutionResult
 import io.vertx.core.AbstractVerticle
 import org.slf4j.LoggerFactory
 
@@ -17,13 +20,16 @@ class ServerVerticle(val port: Int, val poolSize: Int) : AbstractVerticle() {
 
     override fun start() {
 
-        val carsService = CardsService()
+        val cardsService = CardsService()
 
         // Create router ...
         val router = RestBuilder(vertx)
 
                 // register RESTs
-                .register(CardRest(carsService))
+                .register(CardRest(cardsService))
+                .register(QueryRest(cardsService))
+                .writer(ExecutionResult::class.java, ExecutionResultWriter::class.java)
+
                 /*SlowRest::class.java,
                 PagesRest::class.java)*/
 

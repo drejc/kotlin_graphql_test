@@ -11,7 +11,7 @@ import javax.ws.rs.Produces
 /**
  *
  */
-@Path(API_ROOT + "cards")
+@Path(API_ROOT + "card")
 @Produces("application/json")
 class CardRest(val cards: CardsService) {
 
