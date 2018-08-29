@@ -1,0 +1,22 @@
+schema {
+    query: Query
+}
+
+scalar DateOnly
+
+type Query {
+    all : [Card]
+    card(id: String) : Card!
+}
+
+type Card {
+    number: String
+    expires: DateOnly
+    holder: CardHolder
+}
+
+type CardHolder {
+    name: String
+    surName: String
+}
+
