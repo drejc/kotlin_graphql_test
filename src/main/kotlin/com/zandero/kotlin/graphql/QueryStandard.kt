@@ -26,10 +26,7 @@ class QueryStandard(cards: CardsService) {
     val cardFetcher = CardsDataFetcher(cards)
     val cardListFetcher = CardsListDataFetcher(cards)
 
-    fun schema(): GraphQLSchema {
-
-        val streamReader = loadSchemaFile("/graphql/cards.graphqls")
-        val typeRegistry = schemaParser.parse(streamReader)
+    private val schema : GraphQLSchema by lazy {
 
         val runtimeWiring = RuntimeWiring.newRuntimeWiring()
                 .scalar(GraphQLScalarType("DateOnly", "Convert Instant to Date only", DateOnlyResolver()))
@@ -37,8 +34,9 @@ class QueryStandard(cards: CardsService) {
                 .type(newTypeWiring("Query").dataFetcher("all", cardListFetcher))
                 .build()
 
-
-        return schemaGenerator.makeExecutableSchema(typeRegistry, runtimeWiring)
+        val streamReader = loadSchemaFile("/graphql/cards.graphqls")
+        val typeRegistry = schemaParser.parse(streamReader)
+        schemaGenerator.makeExecutableSchema(typeRegistry, runtimeWiring)
     }
 
     private fun loadSchemaFile(name: String): Reader {
@@ -47,7 +45,7 @@ class QueryStandard(cards: CardsService) {
     }
 
     fun query(query: String): ExecutionResult {
-        val instance = GraphQL.newGraphQL(schema()).build()
+        val instance = GraphQL.newGraphQL(schema).build()
         return instance.execute(query);
     }
 }

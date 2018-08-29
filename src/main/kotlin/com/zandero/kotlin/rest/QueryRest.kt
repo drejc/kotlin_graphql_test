@@ -1,6 +1,7 @@
 package com.zandero.kotlin.rest
 
 import com.zandero.kotlin.API_ROOT
+import com.zandero.kotlin.graphql.QueryKGraphQl
 import com.zandero.kotlin.graphql.QueryStandard
 import com.zandero.kotlin.service.CardsService
 import com.zandero.rest.annotation.ResponseWriter
@@ -24,16 +25,27 @@ import javax.ws.rs.core.MediaType
 /**
  *
  */
-@Path(API_ROOT + "query")
+@Path(API_ROOT)
 @Produces(MediaType.APPLICATION_JSON)
 class QueryRest(cards : CardsService) {
 
     val standard = QueryStandard(cards)
+    val kGraph = QueryKGraphQl(cards)
 
     @GET()
+    @Path("standard")
     fun getCard(@QueryParam("query") query: String) : ExecutionResult {
 
        val decodedQuery = URLDecoder.decode(query, "UTF-8");
        return standard.query(decodedQuery)
+    }
+
+    @GET()
+    @Path("kgraph")
+    @Produces(MediaType.TEXT_PLAIN)
+    fun getCardKGraph(@QueryParam("query") query: String) : String {
+
+        val decodedQuery = URLDecoder.decode(query, "UTF-8");
+        return kGraph.query(decodedQuery)
     }
 }
