@@ -7,19 +7,18 @@ import javax.ws.rs.GET
 import javax.ws.rs.Path
 import javax.ws.rs.PathParam
 import javax.ws.rs.Produces
+import javax.ws.rs.core.MediaType
 
 /**
  *
  */
 @Path(API_ROOT + "card")
-@Produces("application/json")
+@Produces(MediaType.APPLICATION_JSON)
 class CardRest(val cards: CardsService) {
 
     @GET
     @Path("echo")
-    fun echo(): String {
-        return "echo"
-    }
+    fun echo(): String = "echo"
 
     @GET
     @Path("{id}")

@@ -8,6 +8,7 @@ import java.time.format.DateTimeFormatter
 
 
 class DateOnlyResolver : Coercing<Instant, String> {
+
     override fun parseValue(p0: Any?): Instant {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
