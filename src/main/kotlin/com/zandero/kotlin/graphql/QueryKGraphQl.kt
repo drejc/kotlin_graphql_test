@@ -3,6 +3,7 @@ package com.zandero.kotlin.graphql
 import com.github.pgutkowski.kgraphql.KGraphQL
 import com.zandero.kotlin.data.Card
 import com.zandero.kotlin.data.CardHolder
+import com.zandero.kotlin.rest.dto.CardDto
 import com.zandero.kotlin.service.CardsService
 import java.time.Instant
 import java.time.LocalDateTime
@@ -22,6 +23,10 @@ class QueryKGraphQl(cards: CardsService) {
             resolver { id: String -> cards.get(id) }
         }
 
+        query("flat") {
+            resolver { id: String -> CardDto.ModelMapper.from(cards.get(id)!!) }
+        }
+
         query("all") {
             resolver { -> cards.list() }
         }
@@ -34,11 +39,8 @@ class QueryKGraphQl(cards: CardsService) {
             deserialize = { value: String -> Instant.parse(value) }
         }
 
-        //kotlin classes need to be registered with "type" method
-        //to be included in created schema type system
-        //class Character is automatically included,
-        //as it is return type of both created queries
         type<Card>()
+        type<CardDto>()
         type<CardHolder>()
     }
 

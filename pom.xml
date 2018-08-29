@@ -109,20 +109,19 @@
             <scope>test</scope>
         </dependency>
 
-
         <!--Testing stuff bellow-->
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-engine</artifactId>
             <version>${version.junit}</version>
-            <scope>compile</scope>
+            <scope>test</scope>
         </dependency>
 
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-api</artifactId>
             <version>${version.junit}</version>
-            <scope>compile</scope>
+            <scope>test</scope>
         </dependency>
 
         <!-- <dependency>
