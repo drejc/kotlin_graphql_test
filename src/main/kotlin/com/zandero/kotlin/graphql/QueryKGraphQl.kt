@@ -11,7 +11,9 @@ import java.time.ZoneOffset
 import java.time.format.DateTimeFormatter
 
 /**
- *
+ * - much simpler set up
+ * - must check if multiple scalar transformations for same type are possible
+ * - downside: all outputs are wrapped into "data" root filed (currently hardcoded in project)
  */
 class QueryKGraphQl(cards: CardsService) {
 
