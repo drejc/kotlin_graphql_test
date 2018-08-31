@@ -16,7 +16,8 @@ import java.io.Reader
 
 /**
  * - flattening nested fields not simple ...
- * -
+ * - a lot of code (ie. schema, wiring ... etc)
+ * - no simple way to transform objects from A -> B ... need additional resolvers see: DateOnlyResolver
  */
 class QueryStandard(cards: CardsService) {
 

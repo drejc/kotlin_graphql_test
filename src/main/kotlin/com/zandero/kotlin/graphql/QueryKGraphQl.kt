@@ -17,12 +17,16 @@ class QueryKGraphQl(cards: CardsService) {
 
     val schema = KGraphQL.schema {
 
-        configure { useDefaultPrettyPrinter = true }
+        configure {
+            useDefaultPrettyPrinter = true
+        }
 
+        // cool: simpler extraction of parameters
         query("card") {
             resolver { id: String -> cards.get(id) }
         }
 
+        // cool: simple mapper to different DTO
         query("flat") {
             resolver { id: String -> CardDto.ModelMapper.from(cards.get(id)!!) }
         }
@@ -31,6 +35,7 @@ class QueryKGraphQl(cards: CardsService) {
             resolver { -> cards.list() }
         }
 
+        // downside .. one transformation only ... what if we need multiple different transformations from A -> B?
         stringScalar<Instant> {
             serialize = { time: Instant ->
                 val datetime = LocalDateTime.ofInstant(time, ZoneOffset.UTC)
@@ -39,6 +44,7 @@ class QueryKGraphQl(cards: CardsService) {
             deserialize = { value: String -> Instant.parse(value) }
         }
 
+        // cool: register types ...
         type<Card>()
         type<CardDto>()
         type<CardHolder>()
