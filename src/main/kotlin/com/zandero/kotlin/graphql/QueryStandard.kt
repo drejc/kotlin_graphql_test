@@ -15,8 +15,8 @@ import java.io.InputStreamReader
 import java.io.Reader
 
 /**
+ * - a lot of code (ie. schema, data-fetchers, type resolvers, wiring ... etc)
  * - flattening nested fields not simple ...
- * - a lot of code (ie. schema, wiring ... etc)
  * - no simple way to transform objects from A -> B ... need additional resolvers see: DateOnlyResolver
  */
 class QueryStandard(cards: CardsService) {
@@ -30,14 +30,14 @@ class QueryStandard(cards: CardsService) {
 
     private val schema : GraphQLSchema by lazy {
 
-        val runtimeWiring = RuntimeWiring.newRuntimeWiring()
+        val runtimeWiring = RuntimeWiring.newRuntimeWiring() // query and transformation registration
                 .scalar(GraphQLScalarType("DateOnly", "Convert Instant to Date only", DateOnlyResolver()))
                 .type(newTypeWiring("Query").dataFetcher("card", cardFetcher))
                 .type(newTypeWiring("Query").dataFetcher("all", cardListFetcher))
                 .type(newTypeWiring("Query").dataFetcher("flat", flatCardFetcher ))
                 .build()
 
-        val streamReader = loadSchemaFile("/graphql/cards.graphqls")
+        val streamReader = loadSchemaFile("/graphql/cards.graphqls") // need to describe all classes and queries
         val typeRegistry = schemaParser.parse(streamReader)
         schemaGenerator.makeExecutableSchema(typeRegistry, runtimeWiring)
     }

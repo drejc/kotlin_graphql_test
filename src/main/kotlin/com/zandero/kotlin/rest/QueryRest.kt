@@ -4,6 +4,7 @@ import com.zandero.kotlin.API_ROOT
 import com.zandero.kotlin.graphql.QueryKGraphQl
 import com.zandero.kotlin.graphql.QueryStandard
 import com.zandero.kotlin.service.CardsService
+import com.zandero.kotlin.service.UserService
 import com.zandero.rest.annotation.ResponseWriter
 import com.zandero.utils.extra.JsonUtils
 import graphql.ExecutionInput.newExecutionInput
@@ -27,10 +28,10 @@ import javax.ws.rs.core.MediaType
  */
 @Path(API_ROOT)
 @Produces(MediaType.APPLICATION_JSON)
-class QueryRest(cards : CardsService) {
+class QueryRest(cards : CardsService, users: UserService) {
 
     val standard = QueryStandard(cards)
-    val kGraph = QueryKGraphQl(cards)
+    val kGraph = QueryKGraphQl(cards, users)
 
     @GET()
     @Path("standard")

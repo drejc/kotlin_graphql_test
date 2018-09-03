@@ -1,7 +1,9 @@
 package com.zandero.kotlin.service
 
+import com.github.pgutkowski.kgraphql.schema.dsl.TypeID
 import com.zandero.kotlin.data.Card
 import com.zandero.kotlin.data.CardHolder
+import org.omg.PortableInterceptor.USER_EXCEPTION
 import java.time.Instant
 import java.time.temporal.ChronoUnit
 
@@ -10,10 +12,12 @@ import java.time.temporal.ChronoUnit
  */
 class CardsService {
 
+    val time = Instant.ofEpochSecond(1535932800L) // 3.9.2018
+
     var storage = listOf(
-            Card(CardHolder("Ata", "Smrk"), "123-123-123", Instant.now().plus(500, ChronoUnit.DAYS)),
-            Card(CardHolder("Ivan", "Grozni"), "999-888-777", Instant.now().plus(500, ChronoUnit.DAYS)),
-            Card(CardHolder("Mickey", "Mouse"), "666-555-444", Instant.now().plus(500, ChronoUnit.DAYS))
+            Card(Ata, "123-123-123", time.plus(500, ChronoUnit.DAYS)),
+            Card(Ivan, "999-888-777", time.plus(500, ChronoUnit.DAYS)),
+            Card(Mickey, "666-555-44", time.plus(500, ChronoUnit.DAYS))
     )
 
     fun get(id: String): Card? {

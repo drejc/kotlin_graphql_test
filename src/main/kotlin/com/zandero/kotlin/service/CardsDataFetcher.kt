@@ -10,7 +10,7 @@ import graphql.schema.DataFetchingEnvironment
 class CardsDataFetcher(val cards: CardsService) : DataFetcher<Card> {
 
     override fun get(env: DataFetchingEnvironment?): Card {
-        val id = env!!.arguments["id"].toString()
+        val id = env!!.arguments["id"].toString() // need to parse arguments ...
         return cards.get(id)!!
     }
 }

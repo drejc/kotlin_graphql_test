@@ -11,13 +11,13 @@ type Query {
 }
 
 type Card {
-    number: String
+    number: ID
     expires: DateOnly
     holder: CardHolder
 }
 
 type CardHolder {
-    name: String
+    name: ID
     surName: String
 }
 
